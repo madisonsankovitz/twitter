@@ -27,31 +27,10 @@ library(forcats)
 library(prismatic)
 library(httr)
 
-# createTokenNoBrowser<- function(appName, consumerKey, consumerSecret,
-#                                 accessToken, accessTokenSecret) {
-#   app <- httr::oauth_app(appName, consumerKey, consumerSecret)
-#   params <- list(as_header = TRUE)
-#   credentials <- list(oauth_token = accessToken,
-#                       oauth_token_secret = accessTokenSecret)
-#   token <- httr::Token1.0$new(endpoint = NULL, params = params,
-#                               app = app, credentials = credentials)
-#   return(token)
-# }
-# 
-# twitter_token <- createTokenNoBrowser("ciberseminarresearch","wKQp1U9E8YXsQgaLrfpK14M53",
-#                               "GrUwj5Ee4Pu8tfCCjIfLeL1Fp0cwgy7RVJZRJYmmMmC3WDRU9L",
-#                               "2608928160-TSyYRwmfMjA1hG9gaA4tnSGaaHo863hi6LcwdVd",
-#                               "tk8kxIGhah9YZ2rUdEhgugDvHIrzEfgTAZOTzNCj8rNt3")
-
-# twitter_token <- create_token(app = "ciberseminarresearch",
-#                               consumer_key = "wKQp1U9E8YXsQgaLrfpK14M53",
-#                               consumer_secret = "GrUwj5Ee4Pu8tfCCjIfLeL1Fp0cwgy7RVJZRJYmmMmC3WDRU9L",
-#                               set_renv = FALSE)
-
-consumer_key <- "wKQp1U9E8YXsQgaLrfpK14M53"
-consumer_secret <- "GrUwj5Ee4Pu8tfCCjIfLeL1Fp0cwgy7RVJZRJYmmMmC3WDRU9L"
-access_token <- "2608928160-x5bfesekIYgVJKcmiT1txR94ttBHSSlVkLCIEyK"
-access_secret <- "OKJTtjWz6lWXbVLlUbde8iRIFgwpJ04SxOYjYm792uaFj"
+consumer_key <- "CONSUMER KEY"
+consumer_secret <- "CONSUMER SECRET"
+access_token <- "ACCESS TOKEN"
+access_secret <- "ACCESS SECRET"
 
 options(httr_oauth_cache = TRUE)
 
@@ -63,7 +42,7 @@ twitter_token <- create_token(
   access_secret, set_renv = FALSE)
 
 #Set Google API Key
-ggmap::register_google(key = "AIzaSyDX-h8y1k2MHCsZBjSx-UtPJiixwuvAMCk")
+ggmap::register_google(key = "KEY")
 
 #### function to make URL clickable ####
 make_url_html <- function(url) {
@@ -283,7 +262,7 @@ output$wordcloud <- renderPlot({
   cleaned_tweet_words <- tweets_clean %>%
     anti_join(stop_words) %>%
     subset(word!="amp")
-# Plot the top 15 words
+# Plot the top 100 words
   set.seed(1234)
   for_wordcloud <- cleaned_tweet_words %>%
     count(word, sort = TRUE) %>%
@@ -323,7 +302,7 @@ output$wordcloud30 <- renderPlot({
   cleaned_tweet_words <- tweets_clean %>%
     anti_join(stop_words) %>%
     subset(word!="amp")
-  # Plot the top 15 words
+  # Plot the top 100 words
   set.seed(1234)
   for_wordcloud <- cleaned_tweet_words %>%
     count(word, sort = TRUE) %>%
@@ -366,7 +345,6 @@ output$wordcloud2 <- renderPlot({
       cleaned_tweet_words <- cleaned_tweet_words %>%
         inner_join(get_sentiments("bing")) %>%
         count(word, sentiment, sort = TRUE)
-      # recode(x, a = "Apple", b = "Bear", c = "Car")
       cleaned_tweet_words$sentiment <- recode(cleaned_tweet_words$sentiment,positive = "1positive", negative = "2negative")
       acast(cleaned_tweet_words, word ~ sentiment, value.var = "n", fill = 0) %>%
         comparison.cloud(colors = c("#18B3B7", "#F35E5A"),
@@ -394,7 +372,6 @@ output$wordcloud230 <- renderPlot({
   cleaned_tweet_words <- cleaned_tweet_words %>%
     inner_join(get_sentiments("bing")) %>%
     count(word, sentiment, sort = TRUE)
-  # recode(x, a = "Apple", b = "Bear", c = "Car")
   cleaned_tweet_words$sentiment <- recode(cleaned_tweet_words$sentiment,positive = "1positive", negative = "2negative")
   acast(cleaned_tweet_words, word ~ sentiment, value.var = "n", fill = 0) %>%
     comparison.cloud(colors = c("#18B3B7", "#F35E5A"),
